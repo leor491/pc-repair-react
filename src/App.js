@@ -1,28 +1,42 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Menu from './Menu';
+import Main from './Main';
+import About from './About';
+import Contact from './Contact';
+import Container from './Container';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
+export default class App extends Component {
+
+	static pages = ["Home", "About", "Contact"];
+	static comps = [<Main/>, <About/>, <Contact/>];
+
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			pIndex: 0
+		}
+	}
+
+	handleMenuClick = (pIndex) => {
+		this.setState({ pIndex });
+	}
+
+	render = () => {
+		return(
+			<div className="App">
+				<Menu 
+					onMenuClick={this.handleMenuClick} 
+					pIndex={this.state.pIndex} 
+					pages={App.pages}
+					color="dark"
+					brand="PC Repair"
+				/>
+				<Container
+					pIndex={this.state.pIndex}
+					comps={App.comps} 
+				/>
+			</div>
+			);
+	}
 }
-
-export default App;
